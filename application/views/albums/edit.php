@@ -147,7 +147,7 @@
 <!-- The template to display files available for download -->
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr id="item-{%=file.pos%}" class="template-download fade" data-pos="{%=file.pos%}">
+    <tr id="item-{%=file.pos%}" data-num-id="{%=file.id%}"  class="template-download fade" data-pos="{%=file.pos%}">
         <td>
             <span class="pos" >{%=file.pos%}</span>
         </td>

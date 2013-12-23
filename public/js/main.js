@@ -157,6 +157,7 @@ $('#fileupload').bind('fileuploadsubmit', function (e, data) {
             /\/[^\/]*$/,
             '/cors/result.html?%s'
         )
+
     );
 
    // Load existing files:
@@ -165,7 +166,7 @@ $('#fileupload').bind('fileuploadsubmit', function (e, data) {
     $.ajax({
         // Uncomment the following to send cross-domain cookies:
         //xhrFields: {withCredentials: true},
-        url: $('#fileupload').fileupload('option', 'url'),
+        url: "http://localhost/aida/HAJFotos/albums/listfiles/"+$("#randir").val()+"/"+$("#id_album").val(),
         dataType: 'json',
         context: $('#fileupload')[0]
     }).always(function () {

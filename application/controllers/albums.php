@@ -64,45 +64,24 @@ class Albums extends CI_Controller {
 		}
 
 	}
-	public function do_upload2($randir=false,$id=false)
+	public function listfiles($randir=false,$id=false)
 	{
 
-		if(!$randir)
-		{
-			$id=$this->input->post("id");
-			$randir=$this->input->post('randir');
-		}
-		else
-		{
-
-
-			if($randir!="" && is_dir(FCPATH."files/albums/" . $randir."/") &&
-				is_writable(FCPATH."files/albums/" . $randir."/") &&
-				is_dir(FCPATH."files/albums/" . $randir."/thumbs/") &&
-				is_writable(FCPATH."files/albums/" . $randir."/thumbs/")
-				)
-			{
-					//es liarte posar una altre carpeta pk el plugin esta fet aix
 		        $upload_path_url = base_url() . 'files/albums/'.$randir."/";
 
 		        $config['upload_path'] = FCPATH . 'files/albums/'.$randir."/";
 		        $config['allowed_types'] = 'jpg|jpeg|png|gif';
-		        $config['max_size'] = '30000';
+		        $config['max_size'] = 0	;
 
 		        $this->load->library('upload', $config);
-
-		        if (!$this->upload->do_upload())
-		        {
-		            //$error = array('error' => $this->upload->display_errors());
-		            //$this->load->view('upload', $error);
-
 		            //Load the list of existing files in the upload directory
 		            $this->load->model('photo_model');
 		            $array=$this->photo_model->getAllByAlbumOrder($id)->result_array();
 		            //var_dump($array);
-		            $existingFiles = get_dir_file_info($config['upload_path']);
+/*		            $existingFiles = get_dir_file_info($config['upload_path']);
 		            for($i=0;$i<count($array);$i++) {
 		            	 $array[$i]['size']=intval($array[$i]['size']);
+
 		            }
 		            $foundFiles = array();
 		            $f=0;
@@ -118,19 +97,47 @@ class Albums extends CI_Controller {
 				                $foundFiles[$f]['deleteType'] = 'DELETE';
 				                $foundFiles[$f]['modifyUrl'] = base_url() . 'photos/editImage/' . $fileName;
 				                $foundFiles[$f]['error'] = null;
+
 				                $foundFiles[$f]['pos']=$f;
 				                $foundFiles[$f]['title']="sssss";
 				                $foundFiles[$f]['description']="ppp";
 			                	$f++;
 			              }
-			        }
+			        }*/
 		            $this->output
 		            ->set_content_type('application/json')
 		            ->set_output(json_encode(array('files' => $array)));
-		        }
-		        else
-		        {
 
+	}
+	public function do_upload2($randir=false,$id=false)
+	{
+
+			if($randir!="" && is_dir(FCPATH."files/albums/" . $randir."/") &&
+				is_writable(FCPATH."files/albums/" . $randir."/") &&
+				is_dir(FCPATH."files/albums/" . $randir."/thumbs/") &&
+				is_writable(FCPATH."files/albums/" . $randir."/thumbs/")
+				)
+			{
+
+					//es liarte posar una altre carpeta pk el plugin esta fet aix
+		        $upload_path_url = base_url() . 'files/albums/'.$randir."/";
+
+		        $config['upload_path'] = FCPATH . 'files/albums/'.$randir."/";
+		        $config['allowed_types'] = 'jpg|jpeg|png|gif';
+		        $config['max_size'] = 0	;
+
+		        $this->load->library('upload', $config);
+
+		        if (!$this->upload->do_upload())
+		        {
+		        	$files=array();
+		        	 $info->error=$this->upload->display_errors("","");
+		        	$files[] =$info;
+		        	echo json_encode(array("files"=>$files));
+	}     else
+		        {
+		            //$error = array('error' => $this->upload->display_errors());
+		            //$this->load->view('upload', $error);
 
 
 		            $data = $this->upload->data();
@@ -171,7 +178,7 @@ class Albums extends CI_Controller {
 		            $this->image_lib->resize();
 		            /*$this->load->model("photo_model");
 		            $this->photo_model->insert(array('id_album'=>$id,'title'=>$titlephoto[0],"description"=>$desc[0],"size"=>$data['file_size'],'name'=>$data['file_name'],"url"=>$data['full_path'],));*/
-var_dump($data['file_size']);exit;
+
 		            //set the data for the json array
 		            $info->name = $data['file_name'];
 		            $info->size = $data['file_size'];
@@ -182,15 +189,17 @@ var_dump($data['file_size']);exit;
 		            $info->thumbnailUrl = $upload_path_url . 'thumbs/' . $data['file_name'];
 		            $info->deleteUrl = base_url() . 'albums/deleteImage/' . $data['file_name']."/".$id;
 		            $info->deleteType = 'DELETE';
-		            $info->error = null;
+
+		            $info->error = $this->upload->display_errors();
 		            $this->load->model("photo_model");
-		            $this->photo_model->insert(array('id_album'=>$id,'title'=>$titlephoto[0],"description"=>$desc[0],"size"=>$data['size'],'name'=>$data['file_name'],"url"=>$info->url,
+		            $this->photo_model->insert(array('id_album'=>$id,'title'=>$titlephoto[0],"description"=>$desc[0],"size"=>$data['file_size'],'name'=>$data['file_name'],"url"=>$info->url,
 		            	'thumbnailUrl'=>$info->thumbnailUrl,'deleteType'=>$info->deleteType,'deleteUrl'=>$info->deleteUrl,'error'=>$info->error,'type'=>$info->type));
 
 		            $files[] = $info;
 		            //this is why we put this in the constants to pass only json data
 		            if (IS_AJAX) {
-		                echo json_encode(array("files" => $files));
+
+		              echo json_encode(array("files" => $files));
 		                //this has to be the only data returned or you will get an error.
 		                //if you don't give this a json array it will give you a Empty file upload result error
 		                //it you set this without the if(IS_AJAX)...else... you get ERROR:TRUE (my experience anyway)
@@ -200,11 +209,8 @@ var_dump($data['file_size']);exit;
 		                $this->load->view('upload/upload_success', $file_data);
 		            }
 		        }
-		    }
-		    else
-		    {
 
-		    }
+
 		}
 	}
 	public	function edit($id=false)

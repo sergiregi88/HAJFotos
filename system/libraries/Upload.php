@@ -142,10 +142,12 @@ class CI_Upload {
 	 */
 	public function do_upload($field = 'userfile')
 	{
-//var_dump($_FILES[$field]);exit;
+
+///var_dump($_FILES);exit;
 	// Is $_FILES[$field] set? If not, no reason to continue.
 		if ( ! isset($_FILES[$field]))
 		{
+
 			$this->set_error('upload_no_file_selected');
 			return FALSE;
 		}
@@ -200,7 +202,6 @@ class CI_Upload {
 			return FALSE;
 		}
 
-
 		// Set the uploaded data as class variables
 		$this->file_temp = $_FILES[$field]['tmp_name'];
 		$this->file_size = $_FILES[$field]['size'];
@@ -210,6 +211,7 @@ class CI_Upload {
 		$this->file_name = $this->_prep_filename($_FILES[$field]['name']);
 		$this->file_ext	 = $this->get_extension($this->file_name);
 		$this->client_name = $this->file_name;
+
 
 		// Is the file type allowed to be uploaded?
 		if ( ! $this->is_allowed_filetype())
@@ -252,6 +254,7 @@ class CI_Upload {
 		if ( ! $this->is_allowed_filesize())
 		{
 			$this->set_error('upload_invalid_filesize');
+
 			return FALSE;
 		}
 
@@ -366,6 +369,7 @@ class CI_Upload {
 						'image_type'		=> $this->image_type,
 						'image_size_str'	=> $this->image_size_str,
 					);
+
 
 	}
 
@@ -652,12 +656,14 @@ class CI_Upload {
 	 */
 	public function is_allowed_filesize()
 	{
+
 		if ($this->max_size != 0  AND  $this->file_size > $this->max_size)
 		{
 			return FALSE;
 		}
 		else
 		{
+
 			return TRUE;
 		}
 	}
