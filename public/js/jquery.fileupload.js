@@ -292,6 +292,7 @@
         },
 
         _getFormData: function (options) {
+
             var formData;
             if ($.type(options.formData) === 'function') {
                 return options.formData(options.form);
@@ -301,6 +302,7 @@
             }
             if ($.type(options.formData) === 'object') {
                 formData = [];
+
                 $.each(options.formData, function (name, value) {
                     formData.push({name: name, value: value});
                 });
@@ -434,11 +436,13 @@
                 options.data = options.blob || file;
             } else if ($.support.xhrFormDataFileUpload) {
                 if (options.postMessage) {
+
                     // window.postMessage does not allow sending FormData
                     // objects, so we just add the File/Blob objects to
                     // the formData array and let the postMessage window
                     // create the FormData object out of this array:
                     formData = this._getFormData(options);
+
                     if (options.blob) {
                         formData.push({
                             name: paramName,
@@ -454,6 +458,7 @@
                         });
                     }
                 } else {
+
                     if (that._isInstanceOf('FormData', options.formData)) {
                         formData = options.formData;
                     } else {
@@ -1068,6 +1073,7 @@
             } else if (entry.isDirectory) {
                 dirReader = entry.createReader();
                 dirReader.readEntries(function (entries) {
+                    console.log(entries,"dd");
                     that._handleFileTreeEntries(
                         entries,
                         path + entry.name + '/'
@@ -1394,7 +1400,7 @@
                                 dfd.reject();
                                 return;
                             }
-                            data.files = files;
+                            data.files = $.toJSON(files);
                             jqXHR = that._onSend(null, data).then(
                                 function (result, textStatus, jqXHR) {
                                     dfd.resolve(result, textStatus, jqXHR);

@@ -14,11 +14,11 @@
 				<?php  for($i=0;$i<count($list_albums);$i++){?>
 					<tr>
 						<td><?php echo $i;?></td>
-						<td><?php echo $list_albums[$i]->name; ?></td>
-						<td><?php echo anchor(base_url().'albums/edit/'.$list_albums[$i]->id,"<i class='btn pencil icon-red' title='Editar'></i>");?></td>
-                        <td><?php echo anchor(base_url().'albums/delete/'.$list_albums[$i]->id,"<i class='btn-remove-circle' title='Eliminar'></i>",array('onclick'=>"return confirm('Seguro que quere eliminar este producto?');"));?></td>
+						<td><?php echo $list_albums[$i]->title; ?></td>
+						<td><?php echo anchor(base_url().'albums/edit/'.$list_albums[$i]->id,"<i class='glyphicon glyphicon-pencil' title='Editar'></i><span>Editar</span>",array('class'=>'btn btn-default'));?></td>
 
-        </tr></td>
+			             <td><?php echo anchor(base_url().'albums/delete/'.$list_albums[$i]->id,"<i class='glyphicon glyphicon-trash' title='Eliminar'></i><span>Eliminar</span>",array('class'=>'btn btn-danger delete',"data-id"=>$list_albums[$i]->id));?></td>
+
 
 					</tr>
 				<?php } ?>
@@ -35,3 +35,52 @@
  }
     echo anchor(base_url().'albums/create',"Crear familia",array('class'=>"btn"));?>
 
+<script type="text/javascript">
+	$(".delete").on("click",function(){
+		var id=$(this).data("id");
+		if(confirm("Esta seguro/a de eliminar este album?"))
+		{
+		$.ajax({url:'http://localhost/aida/HAJFotos/albums/delete/'+id,
+			type:"get",
+			dataType:"json",
+			success:function(data){
+				console.log(data);
+				if(data.result=="question")
+				{
+					if(confirm("Este Album tiene Imagenes quere borrar tambien las imagenes?"))
+					{
+						$.ajax({url:'http://localhost/aida/HAJFotos/albums/deleteImagesOfAlbum/'+id,
+						type:'get',
+						dataType:'json',
+						success:function(data){
+							console.log(data);
+							if(data.result=="success")
+							{
+
+							}
+							else
+							{
+
+							}
+						}});
+					}
+					else
+					{
+
+					}
+				}
+				else if(data.result=="success")
+				{
+
+				}
+				else
+				{
+
+				}
+
+			}});
+		}
+		return false;
+	})
+
+</script>

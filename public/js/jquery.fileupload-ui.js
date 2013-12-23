@@ -1,4 +1,4 @@
-/*
+    /*
  * jQuery File Upload User Interface Plugin 9.4.1
  * https://github.com/blueimp/jQuery-File-Upload
  *
@@ -162,10 +162,14 @@
                     files = getFilesFromResponse(data),
                     template,
                     deferred;
+                    console.log(files);
                 if (data.context) {
-                    data.context.each(function (index) {
+                    console.log(data);
+                    data.context.each(function (index,m) {
+                        console.log(files[index],index,m);
                         var file = files[index] ||
                                 {error: 'Empty file upload result'};
+
                         deferred = that._addFinishedDeferreds();
                         that._transition($(this)).done(
                             function () {
@@ -467,6 +471,7 @@
         },
 
         _renderTemplate: function (func, files) {
+
             if (!func) {
                 return $();
             }

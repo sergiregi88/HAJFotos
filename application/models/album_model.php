@@ -6,8 +6,27 @@ class Album_model extends MY_Model {
 
             $this->setTable("album");
         }
+        public function insert($data)
+        {
+        	$iddta=$this->db->select_max("id")->from($this->getTable())->get()->result();
+
+			$max_id=$iddta[0]->id+1;
+
+            $data['id']=$max_id;
 
 
+        	$ret=parent::insert($data);
+        	return array('result'=>$ret,"id"=>$max_id);
+        }
+        public function update($id,$data,$title)
+        {
+        	return parent::update($data,array($title=>$id));
+        }
+        public function delete($id)
+        {
+            $data=array("id"=>$id);
+          return  parent::delete($data);
+        }
 
 }
 

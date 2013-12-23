@@ -21,17 +21,35 @@ class MY_Model extends CI_Model {
     }
    	public function insert($data)
    	{
-   		$this->db->insert($this->getTable(),$data);
+   		if($this->db->insert($this->getTable(),$data))
+      return true;
+      else
+        return false;
    	}
-   	public function delete($id)
+   	public function delete($data_where)
    	{
+        return $this->db->delete($this->getTable(),$data_where);
 
    	}
-   	public function update($id,$data,$data_where)
+   	public function update($data,$data_where)
    	{
-   		$this->db->update($this->getTable(),$data,$data_where,1);
+   		if($this->db->update($this->getTable(),$data,$data_where,1))
+      return true;
+      else
+        return false;
    	}
-
+    public function getOne($id)
+    {
+        return $this->db->select("*")->from($this->getTable())->where(array("id"=>$id))->get()->result();
+    }
+    public function getAllByAlbum($id_album)
+    {
+      return $this->db->select("*")->from($this->getTable())->where(array('id_album'=>$id_album))->get();
+    }
+     public function getAllByAlbumOrder($id_album)
+    {
+      return $this->db->select("*")->from($this->getTable())->where(array('id_album'=>$id_album))->order_by("pos")->get();
+    }
 }
 
 /* End of file MY_Model.php */

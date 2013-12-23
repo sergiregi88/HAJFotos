@@ -142,7 +142,7 @@ class CI_Upload {
 	 */
 	public function do_upload($field = 'userfile')
 	{
-
+//var_dump($_FILES[$field]);exit;
 	// Is $_FILES[$field] set? If not, no reason to continue.
 		if ( ! isset($_FILES[$field]))
 		{
@@ -154,10 +154,18 @@ class CI_Upload {
 		if ( ! $this->validate_upload_path())
 		{
 			// errors will already be set by validate_upload_path() so just return FALSE
+
+
 			return FALSE;
 		}
 
+		$_FILES[$field]['tmp_name']=$_FILES[$field]['tmp_name'][0];
+		$_FILES[$field]['name']=$_FILES[$field]['name'][0];
+		$_FILES[$field]['type']=$_FILES[$field]['type'][0];
+		$_FILES[$field]['error']=$_FILES[$field]['error'][0];
+		$_FILES[$field]['size']=$_FILES[$field]['size'][0];
 		// Was the file able to be uploaded? If not, determine the reason why.
+
 		if ( ! is_uploaded_file($_FILES[$field]['tmp_name']))
 		{
 			$error = ( ! isset($_FILES[$field]['error'])) ? 4 : $_FILES[$field]['error'];
@@ -237,7 +245,7 @@ class CI_Upload {
 		// Convert the file size to kilobytes
 		if ($this->file_size > 0)
 		{
-			$this->file_size = round($this->file_size/1024, 2);
+		//	$this->file_size = round($this->file_size/1024, 2);
 		}
 
 		// Is the file size within the allowed maximum?
@@ -358,6 +366,7 @@ class CI_Upload {
 						'image_type'		=> $this->image_type,
 						'image_size_str'	=> $this->image_size_str,
 					);
+
 	}
 
 	// --------------------------------------------------------------------

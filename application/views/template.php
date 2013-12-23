@@ -23,8 +23,9 @@
 
     <script type="text/javascript" src="<?php echo base_url(); ?>public/js/bootstrap.js"></script>
     <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
+
     <?php
-    if(is_array($styles))
+   /* if(is_array($styles))
     {
         for($i=0;$i<count($styles);$i++)
         {
@@ -42,7 +43,7 @@
                 <?php
             }
         }
-    }
+    }*/
     ?>
     </head>
 <body>
@@ -77,34 +78,10 @@
         <?php if(isset($content))
         $this->load->view($content);
         else
-            echo "";?>
+?>
     </div>
 </div>
 
-<?php
-
-    if(is_array($scripts))
-    {
-        for($i=0;$i<count($scripts);$i++)
-        {
-
-            if($scripts[$i]['extern']=='1'){
-                echo $scripts[$i]['file']."extern<br>";
-            ?>
-<script type="text/javascript"  src="<?php echo $scripts[$i]['file']; ?>.js">
-                </script>
-            <?php}
-            if($scripts[$i]['extern']=='0')
-                {
-echo $scripts[$i]['file']."intern<br>";
-                ?>
-                <script type="text/javascript"  src="<?php echo base_url(); ?>public/js/<?php echo $scripts[$i]['file']; ?>.js">
-                </script>
-
-            <?php
-            }
-        }
-    }
-    ?>
 </body>
 </html>
+
