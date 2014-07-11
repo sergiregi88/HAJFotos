@@ -1,6 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 class MY_Model extends CI_Model {
 	private $table_name;
+  // totes les funcions q faig server a tots elsmodels
 
     public function __construct() {
 
@@ -49,6 +50,11 @@ class MY_Model extends CI_Model {
      public function getAllByAlbumOrder($id_album)
     {
       return $this->db->select("*")->from($this->getTable())->where(array('id_album'=>$id_album))->order_by("pos")->get();
+    }
+    public function getAllOrder()
+    {
+
+        return $this->db->select("*")->from($this->getTable())->order_by("pos")->get();
     }
 }
 

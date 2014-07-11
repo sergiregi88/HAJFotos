@@ -1,30 +1,157 @@
-header{
-	margin:25px;
+body {
+  background: #121212;
+  color: white;
+  font-family: "Just Another Hand";
+  font-size: 100%;
+  width: 100%;
 }
-#dropzone {
-    background: palegreen;
-    width: 250px;
-    height: 100px;
-    line-height: 50px;
-    text-align: center;
-    font-weight: bold;
-    margin-top:200px;
-
+body table {
+  color: grey;
 }
-#dropzone.in {
-    width: 600px;
-    height: 200px;
-    line-height: 200px;
-    font-size: larger;
+@font-face {
+  font-family: 'Just Another Hand';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Just Another Hand'), local('JustAnotherHand-Regular'), url(http://themes.googleusercontent.com/static/fonts/justanotherhand/v4/fKV8XYuRNNagXr38eqbRf8DbBFScDQWNirGEA9Q9Yto.woff) format('woff');
 }
-#dropzone.hover {
-    background: lawngreen;
+@font-face {
+  font-family: 'Arizonia';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Arizonia'), local('Arizonia-Regular'), url(http://themes.googleusercontent.com/static/fonts/arizonia/v3/8Usm7f8XTsZinW2e-ZMd5fesZW2xOQ-xsNqO47m55DA.woff) format('woff');
 }
-#dropzone.fade {
-    -webkit-transition: all 0.3s ease-out;
-    -moz-transition: all 0.3s ease-out;
-    -ms-transition: all 0.3s ease-out;
-    -o-transition: all 0.3s ease-out;
-    transition: all 0.3s ease-out;
-    opacity: 1;
+@font-face {
+  font-family: MyCustomFont;
+  src: url("http://localhost/JosefinSans-SemiBold.eot") /* EOT file for IE */
+  ;
+}
+@font-face {
+  font-family: MyCustomFont;
+  src: url("JosefinSans-SemiBold.ttf") /* TTF file for CSS3 browsers */
+  ;
+}
+.img {
+  height: 600px;
+  width: 600px;
+  background-position: center;
+  margin: 0 auto;
+}
+ul li {
+  padding: 0 15px;
+}
+ul li a {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.carousel-control {
+  left: 125px;
+}
+.carousel-control.right {
+  right: 125px;
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+}
+.navbar-inverse .navbar-nav > li > a:hover {
+  color: #F04747;
+}
+.navbar-inverse .navbar-nav > li > a {
+  color: white;
+}
+.navbar-inverse .navbar-nav > li > a:hover {
+  color: #F04747;
+}
+a.dropdown-toggle {
+  background-color: #222222;
+}
+.dropdown-menu {
+  background-color: #222222;
+}
+.dropdown-menu > li > a {
+  background-color: #222222;
+  color: white;
+}
+.dropdown-menu > li > a:active {
+  background-color: #222222;
+  color: white;
+}
+.dropdown-menu > li > a:hover {
+  background-color: #222222;
+  color: #F04747;
+}
+.navbar .navbar-nav {
+  display: inline-block;
+  float: none;
+  font-family: "Amatic SC";
+  letter-spacing: 1px;
+}
+.navbar .navbar-collapse {
+  text-align: center;
+}
+h1 {
+  float: left;
+  margin: 50px 25px 30px 80px;
+  font-family: Arizonia;
+  width: 600px;
+}
+.logo {
+  float: left;
+  display: block;
+  border: 2px solid #333333;
+  margin: 10px;
+  margin-left: 20px;
+  border-radius: 5px;
+}
+.right {
+  clear: left;
+  float: right;
+}
+div.img_about {
+  background: url("campanilla.jpg") no-repeat;
+  height: 400px;
+  width: 100%;
+}
+.title_big {
+  display: none;
+}
+.title_min {
+  display: block;
+}
+h1.title_min_h1 {
+  margin: 20px 30px;
+}
+@media screen and (min-width: 300px) and (max-width: 900px) {
+  h1 {
+    margin: 25px 25px 15px 100px;
+    width: 300px;
+    font-size: 4em;
+  }
+  h1.title_min_h1 {
+    margin: 5px;
+  }
+  .title_big {
+    display: none;
+  }
+  .title_min {
+    display: block;
+  }
+}
+.panel {
+  font-size: 2em;
+}
+.panel-heading {
+  font-size: 2.1em;
+}
+header {
+  margin: 15px;
+}
+div.center-text {
+  text-align: center;
+}
+.carousel-inner > .item > img.img-no, .carousel-inner > .item > a > img.img-no {
+  background: url("no_images.jpeg") no-repeat;
+  height: 250px;
+  width: 250px;
+  background-position: center;
+  margin: 0 auto;
 }
